@@ -1,0 +1,58 @@
+; This example illustrates basic arithmetic and 
+; uninterpreted functions
+
+(declare-const waiting Bool)
+(declare-const washing Bool)
+(declare-const locking Bool)
+(declare-const drying Bool)
+(declare-const unlocking Bool)
+(declare-const endPrewash Bool)
+(declare-const startDrying Bool)
+(declare-const startWash Bool)
+(declare-const startPrewash Bool)
+(declare-const endDrying Bool)
+(declare-const endWash Bool)
+(declare-const entryTemCheck Bool)
+
+(declare-const delay Bool)
+(declare-const heat Bool)
+(declare-const dry Bool)
+
+(assert (or (and (not delay) (and (not heat) (not dry))) 
+(or (and (not dry) (or (and delay (not heat)) (and (not delay) heat)))
+(or (and dry (or (and delay (not heat)) (and (not delay) heat))) (and (and dry (and (not heat) (not delay))))))))
+;(check-sat) 
+
+;(assert (and delay heat))
+;(check-sat) 
+
+(assert (=> startWash (and washing locking)))
+(assert (=> startPrewash (and locking waiting)))
+(assert (=> endPrewash (and waiting washing)))
+(assert (=> endWash (and washing unlocking)))
+(assert (=> startDrying (and washing drying)))
+(assert (=> endDrying (and drying unlocking)))
+(assert (=> entryTemCheck washing))
+;(check-sat) 
+
+;(assert (=> (or heat delay) (and (and startPrewash waiting) endPrewash)))
+;(assert (=> dry (and (and startDrying drying) endDrying)))
+;(check-sat) 
+
+(assert locking)
+(assert washing)
+(assert unlocking)
+(assert startWash)
+(assert entryTemCheck)
+(assert endWash)
+
+
+
+(assert (and locking (and startPrewash (and startWash (and waiting 
+  (and endPrewash (and washing (and startDrying 
+    (and drying (and unlocking (and endWash 
+      (and (not entryTemCheck) 
+        (not endDrying)))))))))))))
+
+(check-sat) ;Since it is unsatisfiable, no configuring W model can be generated  
+      

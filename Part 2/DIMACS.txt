@@ -1,0 +1,71 @@
+Exercise: 1.5.7
+
+a).
+
+c
+c (((not p) or (not q)) and (p and (not q)) and ((not p) or q))
+c
+p cnf 2 3
+1 0
+2 0
+1 2 0
+
+Comment: SATISFIABLE
+
+
+b).
+
+c
+c (((not p) or (not q) or r) 
+	and ((not p) or q or (not r)) 
+	and ((not p) or q or r) 
+	and (p or (not p) or r) 
+	and (p or p or r)
+c
+p cnf 3 8
+1 0
+2 0
+3 0
+-1 -2 3 0
+-1 2 -3 0
+-1 2 3 0
+1 -2 3 0
+1 2 3 0
+
+Comment: SATISFIABLE
+
+c).
+
+c
+c (((not p) or (not q) or (not r)) 
+	and ((not p) or q or (not r)) 
+	and (p or (not p) or (not r))
+	and (p or (not p) or r) 	
+	and (p or p or (not r))
+c
+p cnf 3 8
+1 0
+2 0
+3 0
+-1 -2 -3 0
+-1 2 -3 0
+1 -2 -3 0
+1 -2 3 0
+1 2 -3 0
+
+Comment: SATISFIABLE
+
+
+Exercise: 1.5.9
+
+c
+c (p and (q and (p or q)))
+c
+p cnf 2 3
+1 0
+2 0
+1 2 0
+
+Comment: SATISFIABLE
+
+

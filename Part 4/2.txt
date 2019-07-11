@@ -1,0 +1,11 @@
+; This example illustrates basic arithmetic and 
+; uninterpreted functions
+
+(declare-const delay Bool)
+(declare-const heat Bool)
+(declare-const dry Bool)
+(assert (or (and (not delay) (and (not heat) (not dry))) 
+(or (and (not dry) (or (and delay (not heat)) (and (not delay) heat)))
+(or (and dry (or (and delay (not heat)) (and (not delay) heat))) (and (and dry (and (not heat) (not delay))))))))
+(assert (and delay heat))
+(check-sat)

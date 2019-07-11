@@ -1,0 +1,71 @@
+
+Satisfiability and Validity
+
+A formula F is valid if F always evaluates to true for any assignment of appropriate values to its uninterpreted function and constant symbols. 
+A formula F is satisfiable if there is some assignment of appropriate values to its uninterpreted function and constant symbols under which F evaluates to true. 
+Validity is about finding a proof of a statement; satisfiability is about finding a solution to a set of constraints. Consider a formula F with some uninterpreted constants,
+say a and b. We can ask whether F is valid, that is whether it is always true for any combination of values for a and b. If F is always true, then not F is always false, 
+and then not F will not have any satisfying assignment; that is, not F is unsatisfiable. That is, F is valid precisely when not F is not satisfiable (is unsatisfiable). 
+Alternately, F is satisfiable if and only if not F is not valid (is invalid). Z3 finds satisfying assignments (or report that there are none). To determine whether a formula F is valid, 
+we ask Z3 whether not F is satisfiable. Thus, to check the deMorgan's law is valid (i.e., to prove it), we show its negation to be unsatisfiable.
+
+
+A). 
+
+(declare-const p Bool) 
+(declare-const q Bool) 
+(define-fun con () Bool 
+(= (=> (not p) (not q)) (=> q p))) 
+(assert (not con)) 
+(check-sat) 
+
+Comment: Satisfiable and Valid
+
+B).
+
+(declare-const p Bool) 
+(declare-const q Bool) 
+(define-fun con () Bool 
+(= (or (not p) (not q)) (not (and p q)))) 
+(assert (not con))
+(check-sat) 
+
+
+Comment: Satisfiable and Valid
+
+f).
+
+; This example illustrates basic arithmetic and 
+; uninterpreted functions
+(declare-const p Bool)
+(declare-const q Bool)
+;(declare-const r Bool)
+(define-fun conjecture () Bool
+ (= (and (not p) (not q)) (not (or p q))))
+(assert (not conjecture))
+(check-sat) 
+
+Comment: Satisfiable and Valid
+
+g).
+
+(declare-const p Bool)
+(declare-const q Bool)
+(declare-const r Bool)
+(define-fun con () Bool
+  (=(and p (not q)) (and (not (=> r q)) (=> r q))))
+(assert (not con))
+(check-sat)
+
+Comment: Unsatisfiable and Invalid 
+
+I).
+
+(declare-const p Bool) 
+(declare-const q Bool) 
+(define-fun con () Bool 
+(= (not (or (not p) q)) p)) 
+(assert (not con))
+(check-sat)
+
+Comment: Unsatisfiable and Invalid 
